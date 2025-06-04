@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Corazón con Frases</title>
+  <style>
+    body {
+      background-color: #ffe4ec;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    #loveBtn {
+      background-color: #e91e63;
+      border: none;
+      border-radius: 50%;
+      width: 180px;
+      height: 180px;
+      cursor: pointer;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 0 25px rgba(0,0,0,0.15);
+    }
+
+    #loveBtn::before {
+      content: "❤️";
+      font-size: 100px;
+      line-height: 1;
+    }
+
+    .phrase {
+      position: absolute;
+      background-color: #f8bbd0;
+      color: black;
+      padding: 8px 16px;
+      border-radius: 25px;
+      white-space: nowrap;
+      font-size: 14px;
+      animation: moveAndFade 2.5s forwards;
+      pointer-events: none;
+    }
+
+    @keyframes moveAndFade {
+      0% {
+        opacity: 1;
+        transform: translate(0, 0);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(var(--x), var(--y));
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <button id="loveBtn" aria-label="Botón corazón"></button>
+
+  <script>
+    const phrasesOriginal = [
+      "Eres hermosa sin esfuerzo.",
+      "Tienes una mirada que destaca.",
+      "Tu sonrisa tiene algo especial.",
+      "Inteligente y segura, así eres.",
+      "Bonita por dentro y por fuera.",
+      "Me encanta tu forma de pensar.",
+      "Tienes estilo y mucha personalidad.",
+      "Eres fuerte, pero también muy dulce.",
+      "Brillas sin hacer ruido.",
+      "Tu vibra es de las que se quedan.",
+      "Eres real, y eso vale mucho.",
+      "Encantas sin intentarlo.",
+      "Naturalmente linda.",
+      "Siempre de buen gusto.",
+      "Sabes estar sin querer llamar la atención.",
+      "Eres increíble.",
+      "Eres única."
+    ];
+
+    const button = document.getElementById("loveBtn");
+
+    button.addEventListener("click", () => {
+      const phrase = document.createElement("div");
+      phrase.className = "phrase";
+      phrase.textContent = phrasesOriginal[Math.floor(Math.random() * phrasesOriginal.length)];
+
+      const angle = Math.random() * 2 * Math.PI; // ángulo aleatorio
+      const distance = 200 + Math.random() * 100; // distancia al azar
+
+      const x = Math.cos(angle) * distance;
+      const y = Math.sin(angle) * distance;
+
+      phrase.style.setProperty('--x', `${x}px`);
+      phrase.style.setProperty('--y', `${y}px`);
+
+      // Posición inicial: en el centro del botón
+      const rect = button.getBoundingClientRect();
+      phrase.style.left = `${rect.left + rect.width / 2}px`;
+      phrase.style.top = `${rect.top + rect.height / 2}px`;
+
+      document.body.appendChild(phrase);
+
+      setTimeout(() => {
+        phrase.remove();
+      }, 2500);
+    });
+  </script>
+</body>
+</html>
